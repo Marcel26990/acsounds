@@ -7,11 +7,21 @@ bot.login(config.token);
 
 bot.on('ready', async () => {
     console.log(`Ready as ${bot.user.tag}`);
-    setInterval(async function() {
-        let status = ['Fuck that shit I\'m outta here!', 'Hell no', `USE ${prefix}sound !!!!`, 'grab em by the pussy', 'Ey manne!', ''];
-        let chosen = status[Math.floor(Math.random() * status.length)];
-        bot.user.setActivity(chosen, {type: "PLAYING"});
-    }, 15000);
+    client.setInterval(async function() {
+        bot.user.setActivity('Fuck that shit I\'m outta here!', {type: "PLAYING"});
+        client.setTimeout(function() {
+            bot.user.setActivity('Hell no', {type: "PLAYING"});
+        }, 15000);
+        client.setTimeout(function() {
+            bot.user.setActivity(`USE ${prefix}sound !!!!`, {type: "PLAYING"});
+        }, 15000);
+        client.setTimeout(function() {
+            bot.user.setActivity('grab em by the pussy', {type: "PLAYING"});
+        }, 15000);
+        client.setTimeout(function() {
+            bot.user.setActivity('Ey manne!', {type: "PLAYING"});
+        }, 15000);
+    }, 75000);
 });
 
 bot.on('message', async message => {
@@ -20,6 +30,4 @@ bot.on('message', async message => {
 
     let args = message.content.split(" ");
     let cont = message.content.split(" ").slice(1).join(" ");
-
-    
 });
