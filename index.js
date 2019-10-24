@@ -5,23 +5,33 @@ const prefix = config.prefix;
 
 bot.login(config.token);
 
+const runStatus = (statusList) => {
+    return function runner() {
+        if(!runner.prototype["index"])
+            runner.prototype.index = [ 0 ];
+
+        const pIndex = runner.prototype.index;
+
+        const message = statusList[pIndex[0]++];
+        if(statusList.length == pIndex[0])
+            pIndex[0] = 0;
+
+        // Could create an invoke but static call is sufficent
+        bot.user.setActivity(message, {type: "PLAYING"});
+    };
+};
+
 bot.on('ready', async () => {
     console.log(`Ready as ${bot.user.tag}`);
-    client.setInterval(async function() {
-        bot.user.setActivity('Fuck that shit I\'m outta here!', {type: "PLAYING"});
-        client.setTimeout(function() {
-            bot.user.setActivity('Hell no', {type: "PLAYING"});
-        }, 15000);
-        client.setTimeout(function() {
-            bot.user.setActivity(`USE ${prefix}sound !!!!`, {type: "PLAYING"});
-        }, 15000);
-        client.setTimeout(function() {
-            bot.user.setActivity('grab em by the pussy', {type: "PLAYING"});
-        }, 15000);
-        client.setTimeout(function() {
-            bot.user.setActivity('Ey manne!', {type: "PLAYING"});
-        }, 15000);
-    }, 75000);
+    setInterval(
+        runStatus([ // Messages
+            "Fuck that shit I'm outta here!",
+            "Hell no",
+            `USE ${prefix}sound !!!!`,
+            "grab em by the pussy",
+            "Ey manne!"
+        ]),
+    15 * 1000); // Message interval
 });
 
 bot.on('message', async message => {
